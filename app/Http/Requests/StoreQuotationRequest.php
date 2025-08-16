@@ -27,6 +27,15 @@ class StoreQuotationRequest extends FormRequest
             'end_date' => 'required|date|after:start_date',
             'total_travelers' => 'required|integer|min:1',
             'coverage_options' => 'required|array',
+            'coverage_options.*' => 'exists:coverage_options,id',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'destination_id.required' => 'The destination field is required.',
+            'total_travelers.required' => 'The Number of travelers field is required.',
         ];
     }
 }

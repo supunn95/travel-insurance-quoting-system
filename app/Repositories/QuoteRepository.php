@@ -4,6 +4,7 @@ namespace App\Repositories;
 use App\Models\Quotation;
 use App\Models\Destination;
 use App\Models\CoverageOption;
+use Illuminate\Database\Eloquent\Collection;
 
 class QuoteRepository
 {
@@ -33,6 +34,31 @@ class QuoteRepository
     public function getSumOfCoverageOptions(array $optionIds): float
     {
         return CoverageOption::whereIn('id', $optionIds)->sum('price');
+    }
+
+    public function getAllDestinations(): Collection
+    {
+        return Destination::get(['id', 'name', 'price']);
+    }
+
+    public function getAllCoverageOptions(): Collection
+    {
+        return CoverageOption::get(['id', 'name', 'price']);
+    }
+
+    public function getAllAddedQuotes(): Collection
+    {
+        return Quotation::with('coverageOptions', 'destination')->get();
+    }
+
+    public function removeQuoteById(int $quoteId): bool
+    {
+        $quotation = Quotation::where('id', $quoteId)->first();
+        if ($quotation) {
+            $quotation->coverageOptions()->detach();
+            return $quotation->delete();
+        }
+        return false;
     }
 
 }

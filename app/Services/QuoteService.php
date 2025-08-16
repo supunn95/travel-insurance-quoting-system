@@ -56,4 +56,24 @@ class QuoteService
         }
     }
 
+    public function getDestinations()
+    {
+        return $this->quoteRepository->getAllDestinations();
+    }
+
+    public function getCoverageOptions()
+    {
+        return $this->quoteRepository->getAllCoverageOptions();
+    }
+
+    public function getAddedQuotes()
+    {
+        return $this->quoteRepository->getAllAddedQuotes();
+    }
+
+    public function removeQuote(int $quoteId)
+    {
+        return $this->quoteRepository->removeQuoteById($quoteId);
+    }
+
 }
