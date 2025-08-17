@@ -39,7 +39,7 @@ class QuoteService
             if ($exists) {
                 return [
                     'success' => false,
-                    'message' => 'Quotation already exists!'
+                    'message' => 'Quote already exists!'
                 ];
             }
 
@@ -61,7 +61,7 @@ class QuoteService
             return [
                 'success' => true,
                 'quote' => $quote,
-                'message' => 'Quote created successfully.'
+                'message' => 'Quote calculated successfully.'
             ];
 
         } catch (Exception $e) {
@@ -69,7 +69,7 @@ class QuoteService
             
             return [
                     'success' => false,
-                    'message' => 'Quote creation failed!'
+                    'message' => 'Quote calculation failed!'
                 ];
 
         }
