@@ -103,8 +103,8 @@
                         @foreach ($addedQuotes as $quote)
                             <tr>
                                 <td class="border border-gray-600 p-3">{{ $quote?->destination?->name }}</td>
-                                <td class="border border-gray-600 p-3">{{ $quote?->start_date }}</td>
-                                <td class="border border-gray-600 p-3">{{ $quote?->end_date }}</td>
+                                <td class="border border-gray-600 p-3">{{ $quote?->start_date->format('Y-m-d') }}</td>
+                                <td class="border border-gray-600 p-3">{{ $quote?->end_date->format('Y-m-d') }}</td>
                                 <td class="border border-gray-600 p-3">
                                     @foreach ($quote?->coverageOptions as $coverageOption)
                                         <span class="block">{{ $coverageOption->name }}
