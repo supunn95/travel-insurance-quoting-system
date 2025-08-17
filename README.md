@@ -70,3 +70,16 @@ This is a basic travel insurance quoting system for the users to input their ess
     - _php artisan migrate --seed_
 7. Open the project on browser
     - _http://localhost:8088/_
+
+## Screenshots
+
+<img width="3450" height="1920" alt="travel_insurance_quote_ss_1" src="https://github.com/user-attachments/assets/ceac5695-a158-45e6-afeb-91075eb369b0" />
+
+<img width="3447" height="1930" alt="travel_insurance_quote_ss_3" src="https://github.com/user-attachments/assets/6e8b977d-1196-4a17-8a85-aad9dd41d5b3" />
+
+<img width="3455" height="1932" alt="travel_insurance_quote_ss_2" src="https://github.com/user-attachments/assets/98f167d4-798c-427a-b359-b7c808619590" />
+
+<img width="3442" height="1920" alt="travel_insurance_quote_ss_4" src="https://github.com/user-attachments/assets/47e35efe-a77c-4ff2-b96e-9240c3bd43e5" />
+
+
+
