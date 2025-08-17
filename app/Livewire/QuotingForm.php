@@ -32,9 +32,14 @@ class QuotingForm extends Component
 
         $quote = $quoteService->createQuotation($validated);
 
-        if ($quote) {
+        if (isset($quote['success']) && $quote['success']) {
+            session()->flash('success', $quote['message']);
             $this->addedQuotes = $quoteService->getAddedQuotes();
+            $this->reset(['destination_id', 'start_date', 'end_date', 'total_travelers', 'coverage_options']);
+        } else {
+            session()->flash('error', $quote['message'] ?? 'Quote creation failed!');
         }
+
 
     }
 
@@ -42,9 +47,16 @@ class QuotingForm extends Component
     {
         $removed = $quoteService->removeQuote($quoteId);
 
-        if ($removed) {
+        if (isset($removed['success']) && $removed['success']) {
+            session()->flash('success', $removed['message']);
             $this->addedQuotes = $quoteService->getAddedQuotes();
         }
+    }
+
+    public function removeAlert()
+    {
+        session()->forget('success');
+        session()->forget('error');
     }
 
     public function render()

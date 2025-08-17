@@ -33,6 +33,16 @@ class QuoteService
     public function createQuotation(array $data)
     {
         try {
+
+            $exists = $this->checkQuoteExists($data['destination_id'], $data['coverage_options'], $data['total_travelers']);
+
+            if ($exists) {
+                return [
+                    'success' => false,
+                    'message' => 'Quotation already exists!'
+                ];
+            }
+
             $totalPrice = $this->calculateQuotation(
                 $data['destination_id'],
                 $data['coverage_options'],
@@ -48,12 +58,26 @@ class QuoteService
                 'coverage_options' => $data['coverage_options']
             ]);
 
-            return $quote;
+            return [
+                'success' => true,
+                'quote' => $quote,
+                'message' => 'Quote created successfully.'
+            ];
 
         } catch (Exception $e) {
             Log::error('Error creating quotation: ' . $e->getMessage());
-            throw new Exception('Error creating quotation.');
+            
+            return [
+                    'success' => false,
+                    'message' => 'Quote creation failed!'
+                ];
+
         }
+    }
+
+    public function checkQuoteExists(int $destinationId, array $coverageOptions, int $totalTravelers): bool
+    {
+        return $this->quoteRepository->checkQuoteExists($destinationId, $coverageOptions, $totalTravelers);
     }
 
     public function getDestinations()
@@ -73,7 +97,14 @@ class QuoteService
 
     public function removeQuote(int $quoteId)
     {
-        return $this->quoteRepository->removeQuoteById($quoteId);
+        $removed = $this->quoteRepository->removeQuoteById($quoteId);
+
+        if ($removed) {
+            return [
+                'success' => true,
+                'message' => 'Quote removed successfully.'
+            ];
+        }
     }
 
 }

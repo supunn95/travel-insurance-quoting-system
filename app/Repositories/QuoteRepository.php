@@ -61,4 +61,19 @@ class QuoteRepository
         return false;
     }
 
+    public function checkQuoteExists(int $destinationId, array $coverageOptions, int $totalTravelers): bool
+    {
+        $coverageCount = count($coverageOptions);
+
+        return Quotation::where('destination_id', $destinationId)
+            ->where('total_travelers', $totalTravelers)
+            ->whereHas('coverageOptions', function ($query) use ($coverageOptions) {
+                $query->whereIn('coverage_options.id', $coverageOptions);
+            }, '=', $coverageCount)
+            ->whereDoesntHave('coverageOptions', function ($query) use ($coverageOptions) {
+                $query->whereNotIn('coverage_options.id', $coverageOptions);
+            })
+            ->exists();
+    }
+
 }
