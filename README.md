@@ -1,62 +1,72 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Basic Travel Insurance Quoting System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a basic travel insurance quoting system for the users to input their essential information, such as destination, travel dates, and coverage options. Upon submission of the form, the system will calculate and display a simple quoted price based on predefined factors.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   Quoting form to input:
+    -   Destination (Europe, Asia, America)
+    -   Travel dates (start & end)
+    -   Coverage options (Medical Expenses, Trip Cancellation)
+    -   Number of travelers
+-   Price calculation (based on user input data):
+    -   Calculation logic - Number Of travelers X (destination + sum of coverage options)
+-   Stores calculated quotes in the database.
+-   View and remove existing quotes.
+-   Prevents duplicate quotes for the same criteria.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **Backend**: Laravel 12
+-   **Frontend**: Livewire + TailwindCSS
+-   **Database**: SQLite / MySQL
+-   **Testing**: PHPUnit (Unit + Feature tests)
 
-## Learning Laravel
+## Project Structure
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   app/
+-   Http/
+    -   Livewire/QuotingForm.php # Handles quoting form UI logic
+    -   Requests/StoreQuotationRequest.php # Validation
+    -   Services/QuoteService.php # Business logic
+    -   Repositories/QuoteRepository.php # Database operations
+    -   resources/views/livewire/quoting-form.blade.php
+-   tests
+    -   QuoteServiceTest.php # Test quote calculation
+    -   QuoteServiceDataTest.php # Test quoting feature
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# travel-insurance-quoting-system
+1. Clone the repository
+2. Go to the project folder
+    - cd travel-insurance-quoting-system
+3. Copy environment file
+    - cp .env.example .env
+4. Setup the local env (Docker)
+    - Setup env using provided files inside docker-setup-files folder
+    - Start containers:
+        - docker-compose up -d
+    - Install dependencies:
+        - Run php bash - docker-compose exec php bash
+            - php composer install
+        - Run npm bash - docker-compose exec npm bash
+            - npm install
+            - npm run build (build the front end)
+5. Setup the database:
+    - If using SQLite
+        - Create _database.sqlite_ in database folder
+        - Add config data to .env
+            - _DB_CONNECTION=sqlite_
+            - _DB_DATABASE=/var/www/html/database/database.sqlite_ - add absolute path of the created database file
+    - If using MYSQL
+        - Add config data to .env
+            - DB_CONNECTION=mysql
+            - DB_HOST=mysql (according to the docker setup)
+            - DB_PORT=3306 (according to the docker setup)
+            - DB_DATABASE=intervest_quoting_system_db (according to the docker setup)
+            - DB_USERNAME=intervest_quoting_system_user (according to the docker setup)
+            - DB_PASSWORD=secret (according to the docker setup)
+6. Run migrations and seeders:
+    - _php artisan migrate --seed_
+7. Open the project on browser
+    - _http://localhost:8088/_
