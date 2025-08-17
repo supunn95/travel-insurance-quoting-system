@@ -9,9 +9,9 @@ use App\Http\Requests\StoreQuotationRequest;
 class QuotingForm extends Component
 {
 
-    public $addedQuotes;
-    public $destinations;
-    public $coverageOptions;
+    public $addedQuotes = null;
+    public $destinations = null;
+    public $coverageOptions = null;
     public $destination_id = null;
     public $start_date = null;
     public $end_date = null;

@@ -28,7 +28,7 @@ class QuoteRepository
 
     public function getDestinationPrice(int $destinationId): float
     {
-        return Destination::where('id', $destinationId)->first()->price ?? 0;
+        return Destination::findOrFail($destinationId)->price;
     }
 
     public function getSumOfCoverageOptions(array $optionIds): float
@@ -48,12 +48,12 @@ class QuoteRepository
 
     public function getAllAddedQuotes(): Collection
     {
-        return Quotation::with('coverageOptions', 'destination')->get();
+        return Quotation::with(['coverageOptions', 'destination'])->get();
     }
 
     public function removeQuoteById(int $quoteId): bool
     {
-        $quotation = Quotation::where('id', $quoteId)->first();
+        $quotation = Quotation::find($quoteId);
         if ($quotation) {
             $quotation->coverageOptions()->detach();
             return $quotation->delete();
